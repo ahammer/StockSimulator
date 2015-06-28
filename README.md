@@ -21,7 +21,7 @@ to work on, or I can assign some tasks to those looking to learn.
 Attributions & 3rd Party Libraries
 
     - Ashley Entity System  ( https://github.com/libgdx/ashley ) (Apache2 License)
-    - RxJava ( https://github.com/ReactiveX/RxJava ) (Apache2 Licenst)
+    - RxJava ( https://github.com/ReactiveX/RxJava ) (Apache2 License)
     - ButterKnife ( https://jakewharton.github.io/butterknife/ ) (Apache2 License)
 
 Additional License notes for Graphics and Attribution
