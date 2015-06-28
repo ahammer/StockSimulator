@@ -7,4 +7,6 @@ Build and install with gradle
 
     ./gradlew installDebug 
 
-Click Stock Simulator and enjoy.
+Click Stock Simulator on your Android Device and Enjoy.
+
+Work in Progress. Alpha
