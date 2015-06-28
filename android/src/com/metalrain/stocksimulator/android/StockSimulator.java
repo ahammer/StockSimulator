@@ -20,7 +20,14 @@ public class StockSimulator extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        state = new GameState();
         instance = this;
+    }
+
+    public static void initializeGameState(int seed, int iterations) {
+        instance.state = new GameState(seed, iterations);
+    }
+
+    public static boolean hasGameStarted() {
+        return (instance.state != null);
     }
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.metalrain.stocksimulator.android.StockSimulator;
 import com.metalrain.stocksimulator.android.R;
+import com.metalrain.stocksimulator.state.GameState;
 import com.metalrain.stocksimulator.state.components.WalletComponent;
 import com.metalrain.stocksimulator.state.entities.PlayerEntity;
 
@@ -77,7 +78,7 @@ public class PlayerView extends FrameLayout {
             float wallet_amount = p.getComponent(WalletComponent.class).balance / 100f;
 
             cash.setText("$" + wallet_amount);
-            iteration.setText("Market Iteration: " + StockSimulator.getGameState().getIteration());
+            iteration.setText(String.valueOf(StockSimulator.getGameState().getIteration()- GameState.MARKET_WARMUP_ITERATIONS));
             speed.setText(StockSimulator.getGameState().getGameSpeed() + "x");
 
             playerGraph.invalidate();

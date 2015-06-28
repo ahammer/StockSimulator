@@ -9,7 +9,7 @@ import com.metalrain.stocksimulator.textClient.TextClient;
 public class crimsim_text {
     public static void main(String ... args) {
         System.out.println("Welcome to Crimsim Text Mode");
-        GameState state = new GameState();
+        GameState state = new GameState((int) (Math.random()*10000), 5000);
         state.startThread();
         TextClient textClient = new TextClient(state);
         textClient.start();

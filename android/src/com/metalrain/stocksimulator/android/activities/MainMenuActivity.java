@@ -2,11 +2,16 @@ package com.metalrain.stocksimulator.android.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.metalrain.stocksimulator.android.R;
@@ -19,6 +24,18 @@ import butterknife.InjectView;
  * Created by Adam on 6/27/2015.
  */
 public class MainMenuActivity extends Activity {
+    enum eGameLength {SHORT(1000), MEDIUM(5000), LONG(10000), XLONG(50000);
+        public final int length;
+
+        eGameLength(int length) {
+            this.length = length;
+        }
+
+        @Override
+        public String toString() {
+            return name() + "\t("+length+" Iterations)";
+        }
+    }
     @InjectView(R.id.Label)
     TextView Label;
     @InjectView(R.id.new_game_label)
@@ -31,6 +48,8 @@ public class MainMenuActivity extends Activity {
     Spinner gameLength;
     @InjectView(R.id.start_game)
     Button startGame;
+    @InjectView(R.id.resume_game)
+    Button resumeGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +59,59 @@ public class MainMenuActivity extends Activity {
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int seed = (int) (Math.random() * 1000000);
+                int iterations = ((eGameLength)gameLength.getSelectedItem()).length;
+
+                try {
+                    String input_seed = randomSeed.getText().toString();
+                    if (!TextUtils.isEmpty(input_seed)) {
+                        seed = Integer.parseInt(input_seed);
+                    }
+                } catch (Exception e) {
+                }
+
+                StockSimulator.initializeGameState(seed,iterations);
                 Intent i = new Intent(v.getContext(), StockSimulatorActivity.class);
                 startActivity(i);
             }
         });
+        resumeGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), StockSimulatorActivity.class);
+                startActivity(i);
+            }
+        });
+
+        gameLength.setAdapter(new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return eGameLength.values().length;
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return eGameLength.values()[position];
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                TextView v = (TextView) convertView;
+                if (v == null) v = new TextView(parent.getContext());
+                v.setText(eGameLength.values()[position].toString());
+                return v;
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resumeGame.setVisibility((StockSimulator.hasGameStarted()) ? View.VISIBLE : View.GONE);
     }
 }

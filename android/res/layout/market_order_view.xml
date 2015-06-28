@@ -16,6 +16,7 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:inputType="number"
+        android:gravity="center"
         android:ems="10"
         android:id="@+id/quantity"
         android:layout_below="@+id/market_item_name"
@@ -79,8 +80,6 @@
             android:layout_height="wrap_content"
             android:text="Buy!"
             android:id="@+id/buy_button"/>
-
-
     </LinearLayout>
 
 
