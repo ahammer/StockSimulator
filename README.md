@@ -19,6 +19,14 @@ to work on, or I can assign some tasks to those looking to learn.
 
 Attributions & 3rd Party Libraries
 
-    - Ashley Entity System  ( https://github.com/libgdx/ashley )
-    - RxJava ( https://github.com/ReactiveX/RxJava )
-    - ButterKnife ( https://jakewharton.github.io/butterknife/ )
+    - Ashley Entity System  ( https://github.com/libgdx/ashley ) (Apache2 License)
+    - RxJava ( https://github.com/ReactiveX/RxJava ) (Apache2 Licenst)
+    - ButterKnife ( https://jakewharton.github.io/butterknife/ ) (Apache2 License)
+
+Additional License notes for Graphics and Attribution
+
+    - You are free to use any graphics included for personal use, but please modify before making
+      a public release.
+    - If you intend to make a fork, please change any included icons/graphics.
+    - Attribution: Adam Hammer, Stock Simulator [https://github.com/ahammer/StockSimulator/]
+    - Contributions to official branch require granting license rights.
