@@ -87,7 +87,6 @@ public class StockSimulatorActivity extends Activity {
                    view = new MarketItemView(viewGroup.getContext());
                }
                 ((MarketItemView) view).setMarketItemEntity((MarketItemEntity) getItem(i));
-
                 return view;
             }
         });
@@ -115,7 +114,6 @@ public class StockSimulatorActivity extends Activity {
             @Override
             public void call(final Object o) {
                 if (o instanceof MarketUpdatedMessage) {
-
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -126,10 +124,8 @@ public class StockSimulatorActivity extends Activity {
                         }
                     });
                 }
-
             }
         });
-
     }
 
 
