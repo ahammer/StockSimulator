@@ -61,7 +61,6 @@ public class OrderView extends FrameLayout {
         ButterKnife.inject(this);
         buttonIncreaseQuantity.setOnClickListener(new ChangeQuantityOnClick(1));
         buttonDecreaseQuantity.setOnClickListener(new ChangeQuantityOnClick(-1));
-        quantity.setEnabled(false);
         buyButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

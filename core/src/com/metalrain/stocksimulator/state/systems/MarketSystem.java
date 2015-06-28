@@ -27,13 +27,18 @@ import java.util.Random;
 public class MarketSystem extends IntervalSystem {
     private final RxBus bus;
     private final Random random;
-    private final int max_inteverals;
+    private final int maxIntevals;
+
+    public int getMaxIntevals() {
+        return maxIntevals;
+    }
+
     int interval = 0;
-    private Engine engine;
     private Family gameStateFamily;
     private Family marketItemFamily;
     private Family stockImpactEventComponent;
     private Family playerFamily;
+    private Engine engine;
 
     public int getInterval() {
         return interval;
@@ -43,7 +48,7 @@ public class MarketSystem extends IntervalSystem {
         super(1f);
         random = new Random(seed);
         this.bus = bus;
-        this.max_inteverals = max_intervals;
+        this.maxIntevals = max_intervals;
     }
 
     @Override
@@ -59,12 +64,12 @@ public class MarketSystem extends IntervalSystem {
 
     @Override
     public void updateInterval() {
-        if (interval >= max_inteverals) return;
+        if (interval >= maxIntevals) return;
         interval++;
         StockImpactEventComponent component = injectMarketEvents();
         performMarketCalculations(component);
         bus.post(new MarketUpdatedMessage());
-        if (interval == max_inteverals)bus.post(new TimesUpMessage());
+        if (interval == maxIntevals)bus.post(new TimesUpMessage());
 
     }
 

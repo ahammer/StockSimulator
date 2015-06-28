@@ -25,7 +25,7 @@ import java.util.concurrent.Executors;
  * Created by Adam Hammer on 6/22/2015.
  */
 public class GameState {
-    public final static int MARKET_WARMUP_ITERATIONS = 1000;
+    public final static int MARKET_WARMUP_ITERATIONS = 4000;
     public RxBus bus = new RxBus();
     private final MarketSystem system;
     Engine entityEngine = new Engine();
@@ -35,8 +35,6 @@ public class GameState {
     private int gameSpeed = 1;
 
     public GameState(int seed, int max_iterations) {
-
-
         entityEngine.addEntity(new PlayerEntity("Player", "adamhammer2@gmail.com", "test"));
         entityEngine.addEntity(new MarketItemEntity("a",
                 500,
@@ -72,6 +70,11 @@ public class GameState {
         entityEngine.update(MARKET_WARMUP_ITERATIONS);
     }
 
+    public void serialize() {
+        for (Entity e : entityEngine.getEntities()) {
+
+        }
+    }
     private void iterate() {
         long current_time = System.currentTimeMillis();
         long delta_time = current_time - last_time;
@@ -214,5 +217,9 @@ public class GameState {
             gameSpeed = 1;
         }
 
+    }
+
+    public int getMaxIntervals() {
+        return system.getMaxIntevals() - MARKET_WARMUP_ITERATIONS;
     }
 }

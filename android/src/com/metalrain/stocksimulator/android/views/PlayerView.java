@@ -78,7 +78,7 @@ public class PlayerView extends FrameLayout {
             float wallet_amount = p.getComponent(WalletComponent.class).balance / 100f;
 
             cash.setText("$" + wallet_amount);
-            iteration.setText(String.valueOf(StockSimulator.getGameState().getIteration()- GameState.MARKET_WARMUP_ITERATIONS));
+            iteration.setText((StockSimulator.getGameState().getIteration() - GameState.MARKET_WARMUP_ITERATIONS) + "/" + StockSimulator.getGameState().getMaxIntervals());
             speed.setText(StockSimulator.getGameState().getGameSpeed() + "x");
 
             playerGraph.invalidate();
