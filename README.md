@@ -29,4 +29,5 @@ Additional License notes for Graphics and Attribution
       a public release.
     - If you intend to make a fork, please change any included icons/graphics.
     - Attribution: Adam Hammer, Stock Simulator [https://github.com/ahammer/StockSimulator/]
-    - Submissions to Main Branch will only be accepted if author grants full license rights.
+    - Submissions to Main Branch will only be accepted if author grants full license rights. 
+      * This is to provide future license flexibility and clean copyright ownership of the project.
