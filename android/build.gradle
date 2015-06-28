@@ -2,7 +2,8 @@ apply plugin: "com.android.application"
 
 android {
     buildToolsVersion "21.1.0"
-    compileSdkVersion 20
+    compileSdkVersion 21
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -22,5 +23,7 @@ android {
 dependencies {
     compile project(":core")
     compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.android.support:support-v13:+'
+    compile 'com.android.support:appcompat-v7:+'
 
 }
