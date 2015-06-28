@@ -8,13 +8,13 @@
         android:layout_weight="3"
         android:layout_height="match_parent">
 
-        <com.metalrain.crimsim.android.views.PlayerView
+        <com.metalrain.stocksimulator.android.views.PlayerView
             android:id="@+id/player_view"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="0px"/>
 
-        <com.metalrain.crimsim.android.views.OrderView
+        <com.metalrain.stocksimulator.android.views.OrderView
             android:id="@+id/order_view"
 
             android:layout_width="match_parent"

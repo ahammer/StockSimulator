@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.metalrain.crimsim.android.views.EntityRendererView
+    <com.metalrain.stocksimulator.android.views.EntityRendererView
         android:layout_margin="1dp"
         android:layout_width="match_parent"
         android:layout_height="80dp"
