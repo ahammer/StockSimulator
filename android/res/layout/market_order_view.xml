@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Candy"
+        android:layout_alignParentTop="true"
+        android:id="@+id/market_item_name"
+        android:layout_centerHorizontal="true" />
+    <EditText
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/quantity"
+        android:layout_below="@+id/market_item_name"
+        android:layout_centerHorizontal="true"
+        android:text="1"
+        android:focusableInTouchMode="false"
+        android:focusable="false"/>
+
+
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="&gt;"
+        android:id="@+id/button_increase_quantity"
+        android:layout_toRightOf="@id/quantity"
+        android:layout_alignBaseline="@id/quantity"/>
+
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="&lt;"
+        android:id="@+id/button_decrease_quantity"
+        android:layout_toLeftOf="@id/quantity"
+        android:layout_alignBaseline="@id/quantity"/>
+
+    <Button
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/button_decrease_quantity"
+        android:layout_alignBaseline="@id/button_decrease_quantity"
+        android:text="Sell All"
+        android:id="@+id/button_sell_all"
+        />
+
+    <Button
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/button_increase_quantity"
+        android:layout_alignBaseline="@id/button_increase_quantity"
+        android:text="Buy Max"
+        android:id="@+id/button_buy_max"
+        />
+    <LinearLayout
+        android:layout_below="@+id/quantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sell!"
+            android:id="@+id/sell_button"
+            />
+        <Button
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buy!"
+            android:id="@+id/buy_button"/>
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

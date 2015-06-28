@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Market Iteration: 100/1300"
+        android:id="@+id/iteration"
+        android:layout_alignParentLeft="true"
+         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cash: $132"
+        android:id="@+id/cash"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@id/iteration"
+        android:layout_marginLeft="25dp"/>
+
+
+    <com.metalrain.crimsim.android.views.EntityRendererView
+        android:layout_below="@id/iteration"
+        android:layout_alignParentRight="true"
+        android:id="@+id/player_graph"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:text="Speed: 1x"
+        android:id="@+id/speed"
+        android:layout_alignTop="@id/player_graph"
+        android:layout_alignParentLeft="true"
+
+         />
+
+
+</RelativeLayout>
