@@ -7,6 +7,9 @@ Build and install with gradle
 
     ./gradlew installDebug 
 
+Support the Developer via Google Play, official release
+  https://play.google.com/store/apps/details?id=com.metalrain.stocksimulator.android
+
 Click Stock Simulator on your Android Device and Enjoy.
 
 Work in Progress. Alpha
