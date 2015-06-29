@@ -9,7 +9,7 @@ Build and install with gradle
 
 Support the Developer via Google Play, official release ($5, or build it yourself for free)
 
-    [Google Play](https://play.google.com/store/apps/details?id=com.metalrain.stocksimulator.android)
+- [Google Play](https://play.google.com/store/apps/details?id=com.metalrain.stocksimulator.android)
 
 Click Stock Simulator on your Android Device and Enjoy.
 
@@ -20,9 +20,9 @@ to work on, or I can assign some tasks to those looking to learn.
 
 Attributions & 3rd Party Libraries
 
-    - [Ashley Entity System]  (https://github.com/libgdx/ashley) 
-    - [RxJava] (https://github.com/ReactiveX/RxJava) 
-    - [ButterKnife] (https://jakewharton.github.io/butterknife/)
+- [Ashley Entity System]  (https://github.com/libgdx/ashley) 
+- [RxJava] (https://github.com/ReactiveX/RxJava) 
+- [ButterKnife] (https://jakewharton.github.io/butterknife/)
 
 Additional License notes for Graphics and Attribution
 
