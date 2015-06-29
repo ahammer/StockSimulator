@@ -75,6 +75,7 @@ public class MarketSystem extends IntervalSystem {
 
     private void performMarketCalculations(StockImpactEventComponent current_event) {
         try {
+
             Entity gameStateEntity = engine.getEntitiesFor(gameStateFamily).first();
             GameStateComponent gameStateComponent = gameStateEntity.getComponent(GameStateComponent.class);
             gameStateComponent.market_interval++;

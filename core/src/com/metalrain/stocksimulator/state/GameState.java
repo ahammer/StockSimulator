@@ -6,6 +6,14 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.metalrain.stocksimulator.state.components.InventoryComponent;
 import com.metalrain.stocksimulator.state.components.MarketItemComponent;
 import com.metalrain.stocksimulator.state.components.NameComponent;
@@ -17,6 +25,7 @@ import com.metalrain.stocksimulator.state.entities.MarketItemEntity;
 import com.metalrain.stocksimulator.state.entities.PlayerEntity;
 import com.metalrain.stocksimulator.state.systems.MarketSystem;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -72,24 +81,7 @@ public class GameState {
         entityEngine.update(MARKET_WARMUP_ITERATIONS);
     }
 
-    static class SerializedEntity {
-        public SerializedEntity(Entity e) {
-            for (Component c:e.getComponents()) {
-                components.add(c);
-            }
-        }
-        List<Object> components = new ArrayList<>();
-    }
-    public String serialize() {
 
-        return new Gson().toJson(toSerializedEntityArray(entityEngine.getEntities()));
-    }
-
-    private List<SerializedEntity> toSerializedEntityArray(ImmutableArray<Entity> entities) {
-        List<SerializedEntity> list = new ArrayList<>();
-        for (Entity e:entities) list.add(new SerializedEntity(e));
-        return list;
-    }
 
     private void iterate() {
         long current_time = System.currentTimeMillis();
@@ -238,4 +230,91 @@ public class GameState {
     public int getMaxIntervals() {
         return system.getMaxIntevals() - MARKET_WARMUP_ITERATIONS;
     }
+
+
+    /* ------------------- All for serialization */
+    static class SerializedEntity {
+        public SerializedEntity(Entity e) {
+            for (Component c:e.getComponents()) {
+                components.add(c);
+            }
+        }
+        List<Component> components = new ArrayList<>();
+
+        @Override
+        public String toString() {
+            String s = "";
+            for (Component c:components) {
+                s+=c.getClass() + " "+c.toString()+"\n";
+
+            }
+            return "SerializedEntity{" +
+                    "components=" + s +
+                    '}';
+        }
+
+        public Entity toEntity() {
+            Entity e = new Entity();
+            for (Component c:components)e.add(c);
+            return e;
+        }
+    }
+
+    public class SerializedEntityList {
+        List<SerializedEntity> list = new ArrayList<>();
+    }
+    public class SerializedEntitySerializer implements JsonSerializer<Component> {
+        public JsonElement serialize(Component component, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject jo = new JsonObject();
+            jo.addProperty("className", component.getClass().getName());
+            jo.add("component", context.serialize(component));
+            return jo;
+        }
+    }
+
+    public class SerializedEntityDeserializer implements JsonDeserializer<Component> {
+        @Override
+        public Component deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            try {
+                String className = json.getAsJsonObject().get("className").getAsString();
+                return (Component)new Gson().fromJson(json.getAsJsonObject().get("component"), Class.forName(className));
+            } catch (Exception e) {
+                throw new RuntimeException("Can't Deserialize");
+            }
+        }
+    }
+    Gson gson = new GsonBuilder()
+            .registerTypeAdapter(Component.class, new SerializedEntitySerializer())
+            .registerTypeAdapter(Component.class, new SerializedEntityDeserializer())
+            .create();
+    public String serialize() {
+        return gson.toJson(toSerializedEntityArray(entityEngine.getEntities()));
+    }
+
+
+    public void deserialize(String json) {
+        boolean restart = false;
+        if (running) {
+            stopThread();
+            restart = true;
+        }
+
+        entityEngine.removeAllEntities();
+        SerializedEntityList output = gson.fromJson(json, SerializedEntityList.class);
+
+        for (SerializedEntity e:output.list) {
+          entityEngine.addEntity(e.toEntity());
+            System.out.println(e.toString());
+        }
+
+        if (restart) startThread();
+
+    }
+
+    private SerializedEntityList toSerializedEntityArray(ImmutableArray<Entity> entities) {
+        SerializedEntityList l = new SerializedEntityList();
+        for (Entity e:entities) l.list.add(new SerializedEntity(e));
+        return l;
+    }
+    /*----------------------------------*/
 }
