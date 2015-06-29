@@ -2,7 +2,7 @@ package com.metalrain.stocksimulator.android.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.DataSetObserver;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.metalrain.stocksimulator.android.R;
@@ -24,7 +23,11 @@ import butterknife.InjectView;
  * Created by Adam on 6/27/2015.
  */
 public class MainMenuActivity extends Activity {
-    enum eGameLength {SHORT(1000), MEDIUM(5000), LONG(10000), XLONG(50000);
+    @InjectView(R.id.source_code)
+    Button sourceCode;
+
+    enum eGameLength {
+        SHORT(1000), MEDIUM(5000), LONG(10000), XLONG(50000);
         public final int length;
 
         eGameLength(int length) {
@@ -33,9 +36,10 @@ public class MainMenuActivity extends Activity {
 
         @Override
         public String toString() {
-            return name() + "\t("+length+" Iterations)";
+            return name() + "\t(" + length + " Iterations)";
         }
     }
+
     @InjectView(R.id.Label)
     TextView Label;
     @InjectView(R.id.new_game_label)
@@ -56,11 +60,21 @@ public class MainMenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu_activity);
         ButterKnife.inject(this);
+
+        sourceCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://github.com/ahammer/StockSimulator"));
+                startActivity(i);
+            }
+        });
+        
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int seed = (int) (Math.random() * 1000000);
-                int iterations = ((eGameLength)gameLength.getSelectedItem()).length;
+                int iterations = ((eGameLength) gameLength.getSelectedItem()).length;
 
                 try {
                     String input_seed = randomSeed.getText().toString();
@@ -70,7 +84,7 @@ public class MainMenuActivity extends Activity {
                 } catch (Exception e) {
                 }
 
-                StockSimulator.initializeGameState(seed,iterations);
+                StockSimulator.initializeGameState(seed, iterations);
                 Intent i = new Intent(v.getContext(), StockSimulatorActivity.class);
                 startActivity(i);
             }

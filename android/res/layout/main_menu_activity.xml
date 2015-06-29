@@ -73,7 +73,12 @@
             android:text="Resume Game"
             android:layout_gravity="center"
             android:id="@+id/resume_game"/>
-
+        <Button
+            android:id="@+id/source_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Get Source" />
     </LinearLayout>
 
 
