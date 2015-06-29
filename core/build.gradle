@@ -6,6 +6,7 @@ sourceCompatibility = 1.7
 dependencies {
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile 'io.reactivex:rxjava:1.0.12'
+        compile 'com.google.code.gson:gson:2.3.1'
 }
 
 sourceSets {
