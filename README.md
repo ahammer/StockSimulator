@@ -3,6 +3,10 @@ Work in Progress. Alpha
 
 A simple Stock Market simulator for Java and Android
 
+[Screenshot 1]: https://github.com/ahammer/StockSimulator/blob/master/screenshots/device-2015-06-28-143947.png "Screenshot 1"
+
+[Screenshot 2]: https://github.com/ahammer/StockSimulator/blob/master/screenshots/device-2015-06-28-144029.png "Screenshot 2"
+
 # Usage
 
 Build and install with gradle
