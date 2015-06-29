@@ -5,7 +5,7 @@ A simple Stock Market simulator for Java and Android
 
 # Usage
 
-Build and install with gradle
+Build and install with gradle (JDK + Android SDK Required)
 
     ./gradlew installDebug 
 
