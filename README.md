@@ -3,11 +3,6 @@ Work in Progress. Alpha
 
 A simple Stock Market simulator for Java and Android
 
-![Screenshot 1](https://github.com/ahammer/StockSimulator/blob/master/screenshots/device-2015-06-28-143947.png) 
-
-![Screenshot 2](https://github.com/ahammer/StockSimulator/blob/master/screenshots/device-2015-06-28-144029.png)
-
-
 # Usage
 
 Build and install with gradle
@@ -39,3 +34,10 @@ Additional License notes for Graphics and Attribution
     - Attribution: Adam Hammer, Stock Simulator [https://github.com/ahammer/StockSimulator/]
     - Submissions to Main Branch will only be accepted if author grants full license rights. 
       * This is to provide future license flexibility and clean copyright ownership of the project.
+      
+      
+      
+![Screenshot 1](https://github.com/ahammer/StockSimulator/blob/master/screenshots/device-2015-06-28-143947.png) 
+
+![Screenshot 2](https://github.com/ahammer/StockSimulator/blob/master/screenshots/device-2015-06-28-144029.png)
+
