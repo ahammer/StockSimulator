@@ -1,9 +1,11 @@
 package com.metalrain.stocksimulator.state;
 
+import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.google.gson.Gson;
 import com.metalrain.stocksimulator.state.components.InventoryComponent;
 import com.metalrain.stocksimulator.state.components.MarketItemComponent;
 import com.metalrain.stocksimulator.state.components.NameComponent;
@@ -70,11 +72,25 @@ public class GameState {
         entityEngine.update(MARKET_WARMUP_ITERATIONS);
     }
 
-    public void serialize() {
-        for (Entity e : entityEngine.getEntities()) {
-
+    static class SerializedEntity {
+        public SerializedEntity(Entity e) {
+            for (Component c:e.getComponents()) {
+                components.add(c);
+            }
         }
+        List<Object> components = new ArrayList<>();
     }
+    public String serialize() {
+
+        return new Gson().toJson(toSerializedEntityArray(entityEngine.getEntities()));
+    }
+
+    private List<SerializedEntity> toSerializedEntityArray(ImmutableArray<Entity> entities) {
+        List<SerializedEntity> list = new ArrayList<>();
+        for (Entity e:entities) list.add(new SerializedEntity(e));
+        return list;
+    }
+
     private void iterate() {
         long current_time = System.currentTimeMillis();
         long delta_time = current_time - last_time;

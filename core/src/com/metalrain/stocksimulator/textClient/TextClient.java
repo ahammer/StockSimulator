@@ -6,6 +6,7 @@ import com.metalrain.stocksimulator.textClient.sections.MakePurchaseSection;
 import com.metalrain.stocksimulator.textClient.sections.MakeSaleSection;
 import com.metalrain.stocksimulator.textClient.sections.MarketHistorySection;
 import com.metalrain.stocksimulator.textClient.sections.PlayerSection;
+import com.metalrain.stocksimulator.textClient.sections.SerializeSection;
 import com.metalrain.stocksimulator.textClient.sections.ShowMarketSection;
 
 import java.util.Arrays;
@@ -26,7 +27,8 @@ public class TextClient {
             new MarketHistorySection(this),
             new PlayerSection(this),
             new MakePurchaseSection(this),
-            new MakeSaleSection(this)
+            new MakeSaleSection(this),
+            new SerializeSection(this)
 
 
     );
