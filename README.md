@@ -5,9 +5,12 @@ A simple Stock Market simulator for Java and Android
 
 # Usage
 
-Build and install with gradle (JDK + Android SDK Required)
+Build and install with gradle (JDK + Android SDK Required) 
+Just make sure your phone is in developer mode and recognized by adb.
 
-    ./gradlew installDebug 
+    ./gradlew installDebug  
+    
+
 
 Support the Developer via Google Play, official release ($5, or build it yourself for free)
 
