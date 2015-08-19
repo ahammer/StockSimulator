@@ -307,29 +307,46 @@ public class GameState {
     }
 
     public void loadFromJson(String json) {
-        try {
-            Gson gson = new GsonBuilder().registerTypeAdapter(ComponentContainer.class, new JsonDeserializer<ComponentContainer>() {
-                @Override
-                public ComponentContainer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                        String clazz = json.getAsJsonObject().get("clazz").getAsString();
+        stopThread();
+        synchronized (entityEngine) {
+            try {
+                //Custom Deserialized to Convert Component to it's expected Component subclass
+                Gson gson = new GsonBuilder()
+                        .registerTypeAdapter(ComponentContainer.class, new JsonDeserializer<ComponentContainer>() {
+                            @Override
+                            public ComponentContainer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                                String clazz = json.getAsJsonObject().get("clazz").getAsString();
 
-                        try {
-                            Class c = Class.forName(clazz);
-                            return new ComponentContainer((Component) context.deserialize(json.getAsJsonObject().get("value"), c));
-                        } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        return null;
+                                try {
+                                    Class c = Class.forName(clazz);
+                                    return new ComponentContainer((Component) context.deserialize(json.getAsJsonObject().get("value"), c));
+                                } catch (ClassNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                                return null;
 
+                            }
+                        }).create();
+
+                SavedGame sg = gson.fromJson(json, SavedGame.class);
+
+                entityEngine.removeAllEntities();
+                for (EntityContainer ec : sg.entitiesContainers) {
+                    Class c = Class.forName(ec.clazz);
+                    //System.out.println("Adding entity: "+c.getName());
+                    Entity e = (Entity) c.newInstance();
+                    for (ComponentContainer component : ec.components) {
+                        e.add(component.value);
+                     //   System.out.println("Adding Component: "+component.value.getClass().getName());
+                    }
+                    entityEngine.addEntity(e);
                 }
-            }).create();
-            SavedGame sg;
+                System.out.println(sg.toString());
 
-            sg = gson.fromJson(json, SavedGame.class);
-            System.out.println(sg.toString());
-                       
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            startThread();
         }
     }
 }

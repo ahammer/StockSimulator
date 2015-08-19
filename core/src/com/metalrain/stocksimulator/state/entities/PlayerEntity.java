@@ -11,6 +11,8 @@ import com.metalrain.stocksimulator.state.components.WalletComponent;
  * Created by Adam Hammer on 6/22/2015.
  */
 public class PlayerEntity extends Entity {
+    public PlayerEntity() {}
+
     public PlayerEntity(String name, String email, String password) {
         add(new NameComponent(name));
         add(new RegistrationComponent(email, password));

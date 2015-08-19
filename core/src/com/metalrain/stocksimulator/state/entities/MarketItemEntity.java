@@ -12,6 +12,8 @@ import com.metalrain.stocksimulator.state.components.PriceHistoryComponent;
  * Created by Adam Hammer on 6/22/2015.
  */
 public class MarketItemEntity extends Entity {
+    public MarketItemEntity() {}
+
     public MarketItemEntity(String name, int initialPrice, int minPrice, int volatility) {
         add(new NameComponent(name));
         add(new PriceComponent(initialPrice));
