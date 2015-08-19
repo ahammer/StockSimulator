@@ -9,11 +9,15 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 import com.metalrain.stocksimulator.state.GameState;
+import com.metalrain.stocksimulator.state.components.InventoryComponent;
+import com.metalrain.stocksimulator.state.components.NameComponent;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GameSaver {
     private final GameState gameState;
@@ -37,7 +41,7 @@ public class GameSaver {
 
             }
 
-            return new GsonBuilder().create().toJson(savedGame);
+            return new GsonBuilder().enableComplexMapKeySerialization().create().toJson(savedGame);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,11 +63,11 @@ public class GameSaver {
                                 try {
                                     Class c = Class.forName(clazz);
 
-                                    System.out.println("Loading class: "+clazz);
+                                    System.out.println("Loading class: " + clazz);
                                     JsonElement e = json.getAsJsonObject().get("value");
-                                    System.out.println("JSON? "+e);
-                                    Component component = context.deserialize(e,c);
-                                    System.out.println("Component? "+e);
+                                    System.out.println("JSON? " + e);
+                                    Component component = context.deserialize(e, c);
+                                    System.out.println("Component? " + e);
                                     return new ComponentContainer(component);
                                 } catch (ClassNotFoundException e) {
                                     e.printStackTrace();
