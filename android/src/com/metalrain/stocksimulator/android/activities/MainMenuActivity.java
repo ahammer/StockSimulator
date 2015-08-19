@@ -69,63 +69,74 @@ public class MainMenuActivity extends Activity {
                 startActivity(i);
             }
         });
-        
+
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int seed = (int) (Math.random() * 1000000);
-                int iterations = ((eGameLength) gameLength.getSelectedItem()).length;
-
-                try {
-                    String input_seed = randomSeed.getText().toString();
-                    if (!TextUtils.isEmpty(input_seed)) {
-                        seed = Integer.parseInt(input_seed);
-                    }
-                } catch (Exception e) {
-                }
-
-                StockSimulator.initializeGameState(seed, iterations);
-                Intent i = new Intent(v.getContext(), StockSimulatorActivity.class);
-                startActivity(i);
+                startGame(v);
             }
         });
+        
         resumeGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), StockSimulatorActivity.class);
-                startActivity(i);
+                resumeGame(v);
             }
         });
 
-        gameLength.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return eGameLength.values().length;
-            }
+        gameLength.setAdapter(new GameLengthAdapter());
+    }
 
-            @Override
-            public Object getItem(int position) {
-                return eGameLength.values()[position];
-            }
+    private void resumeGame(View v) {
+        Intent i = new Intent(v.getContext(), StockSimulatorActivity.class);
+        startActivity(i);
+    }
 
-            @Override
-            public long getItemId(int position) {
-                return position;
-            }
+    private void startGame(View v) {
+        int seed = (int) (Math.random() * 1000000);
+        int iterations = ((eGameLength) gameLength.getSelectedItem()).length;
 
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                TextView v = (TextView) convertView;
-                if (v == null) v = new TextView(parent.getContext());
-                v.setText(eGameLength.values()[position].toString());
-                return v;
+        try {
+            String input_seed = randomSeed.getText().toString();
+            if (!TextUtils.isEmpty(input_seed)) {
+                seed = Integer.parseInt(input_seed);
             }
-        });
+        } catch (Exception e) {
+        }
+
+        StockSimulator.initializeGameState(seed, iterations);
+        Intent i = new Intent(v.getContext(), StockSimulatorActivity.class);
+        startActivity(i);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         resumeGame.setVisibility((StockSimulator.hasGameStarted()) ? View.VISIBLE : View.GONE);
+    }
+
+    private static class GameLengthAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return eGameLength.values().length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return eGameLength.values()[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView v = (TextView) convertView;
+            if (v == null) v = new TextView(parent.getContext());
+            v.setText(eGameLength.values()[position].toString());
+            return v;
+        }
     }
 }
