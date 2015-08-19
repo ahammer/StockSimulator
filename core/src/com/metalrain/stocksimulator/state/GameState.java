@@ -1,9 +1,19 @@
 package com.metalrain.stocksimulator.state;
 
+import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.metalrain.stocksimulator.state.components.InventoryComponent;
 import com.metalrain.stocksimulator.state.components.MarketItemComponent;
 import com.metalrain.stocksimulator.state.components.NameComponent;
@@ -16,6 +26,7 @@ import com.metalrain.stocksimulator.state.entities.PlayerEntity;
 import com.metalrain.stocksimulator.state.game_saver.GameSaver;
 import com.metalrain.stocksimulator.state.systems.MarketSystem;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -77,11 +88,8 @@ public class GameState {
         entityEngine.update(MARKET_WARMUP_ITERATIONS);
     }
 
-    public void serialize() {
-        for (Entity e : entityEngine.getEntities()) {
 
-        }
-    }
+
     private void iterate() {
         long current_time = System.currentTimeMillis();
         long delta_time = current_time - last_time;
@@ -238,4 +246,5 @@ public class GameState {
     public void loadFromJson(String json) {
         gameSaver.loadFromJson(json);
     }
+
 }

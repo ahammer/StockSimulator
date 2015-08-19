@@ -14,6 +14,7 @@ import com.metalrain.stocksimulator.state.components.NameComponent;
 import com.metalrain.stocksimulator.state.components.PriceComponent;
 import com.metalrain.stocksimulator.state.components.PriceHistoryComponent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,6 +71,7 @@ public class EntityRendererView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+
         super.onDraw(canvas);
         p.setColor(Color.DKGRAY);
         canvas.drawRect(0,0,getWidth(),getHeight(),p);
@@ -161,7 +163,9 @@ public class EntityRendererView extends View {
         p.setColor(Color.GRAY);
         p.setStrokeWidth(5.0f);
         Float lx = null, ly = null;
+        List<Integer> local = new ArrayList(list);//Shallow copy
         for (int i = 0; i < list.size(); i++) {
+
             float px = i / max_x;
             float py = 1-((list.get(i) - min_y) / (float) (max_y - min_y));
             float tx = px * getWidth();
