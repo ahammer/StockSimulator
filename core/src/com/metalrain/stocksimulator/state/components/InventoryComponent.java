@@ -11,7 +11,10 @@ import java.util.Map;
  * Created by Adam Hammer on 6/22/2015.
  */
 public class InventoryComponent extends Component {
-    public final Map<NameComponent, Integer> inventory = new HashMap<NameComponent, Integer>();
+    public Map<NameComponent, Integer> inventory = new HashMap<NameComponent, Integer>();
+
+    public InventoryComponent() {
+    }
 
     public void printInventory(ImmutableArray<Entity> marketItems) {
         for (Entity e:marketItems) {

@@ -58,7 +58,13 @@ public class GameSaver {
 
                                 try {
                                     Class c = Class.forName(clazz);
-                                    return new ComponentContainer((Component) context.deserialize(json.getAsJsonObject().get("value"), c));
+
+                                    System.out.println("Loading class: "+clazz);
+                                    JsonElement e = json.getAsJsonObject().get("value");
+                                    System.out.println("JSON? "+e);
+                                    Component component = context.deserialize(e,c);
+                                    System.out.println("Component? "+e);
+                                    return new ComponentContainer(component);
                                 } catch (ClassNotFoundException e) {
                                     e.printStackTrace();
                                 }
