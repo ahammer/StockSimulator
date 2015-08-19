@@ -1,19 +1,9 @@
 package com.metalrain.stocksimulator.state;
 
-import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import com.metalrain.stocksimulator.state.components.InventoryComponent;
 import com.metalrain.stocksimulator.state.components.MarketItemComponent;
 import com.metalrain.stocksimulator.state.components.NameComponent;
@@ -23,10 +13,9 @@ import com.metalrain.stocksimulator.state.components.WalletComponent;
 import com.metalrain.stocksimulator.state.entities.GameStateEntity;
 import com.metalrain.stocksimulator.state.entities.MarketItemEntity;
 import com.metalrain.stocksimulator.state.entities.PlayerEntity;
+import com.metalrain.stocksimulator.state.game_saver.GameSaver;
 import com.metalrain.stocksimulator.state.systems.MarketSystem;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -38,8 +27,14 @@ import java.util.concurrent.Executors;
  */
 public class GameState {
     public final static int MARKET_WARMUP_ITERATIONS = 4000;
+    private final GameSaver gameSaver = new GameSaver(this);
     public RxBus bus = new RxBus();
     private final MarketSystem system;
+
+    public Engine getEntityEngine() {
+        return entityEngine;
+    }
+
     Engine entityEngine = new Engine();
     long last_time = System.currentTimeMillis();
     Executor executorService = Executors.newSingleThreadExecutor();
@@ -236,117 +231,11 @@ public class GameState {
     }
 
 
-    static class ComponentContainer {
-        String clazz;
-        Component value;
-
-        public ComponentContainer(com.badlogic.ashley.core.Component c) {
-            clazz = c.getClass().getName();
-            value = c;
-        }
-
-        @Override
-        public String toString() {
-            return "ComponentContainer{" +
-                    "clazz='" + clazz + '\'' +
-                    ", value=" + value +
-                    '}';
-        }
-    }
-
-    static class EntityContainer {
-        EntityContainer(long id, String clazz, List<ComponentContainer> components) {
-            this.id = id;
-            this.clazz = clazz;
-            this.components = components;
-        }
-
-        long id;
-        String clazz;
-        List<ComponentContainer> components;
-
-        @Override
-        public String toString() {
-            return "EntityContainer{" +
-                    "id=" + id +
-                    ", clazz='" + clazz + '\'' +
-                    ", components=" + components +
-                    '}';
-        }
-    }
-
-    static class SavedGame {
-        List<EntityContainer> entitiesContainers = new ArrayList<>();
-
-        @Override
-        public String toString() {
-            return "SavedGame{" +
-                    "entitiesContainers=" + entitiesContainers +
-                    '}';
-        }
-    }
     public String saveToJson() {
-        try {
-            ImmutableArray<Entity> entities = entityEngine.getEntities();
-            SavedGame savedGame = new SavedGame();
-            for (Entity entity:entities) {
-                List<ComponentContainer> componentContainers = new ArrayList<>();
-                for (Component c:entity.getComponents()) {
-                    componentContainers.add(new ComponentContainer(c));
-                }
-                EntityContainer entityContainer = new EntityContainer(entity.getId(), entity.getClass().getName(), componentContainers);
-                savedGame.entitiesContainers.add(entityContainer);
-
-            }
-
-            return new GsonBuilder().create().toJson(savedGame);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "Failed";
+        return gameSaver.saveToJson();
     }
 
     public void loadFromJson(String json) {
-        stopThread();
-        synchronized (entityEngine) {
-            try {
-                //Custom Deserialized to Convert Component to it's expected Component subclass
-                Gson gson = new GsonBuilder()
-                        .registerTypeAdapter(ComponentContainer.class, new JsonDeserializer<ComponentContainer>() {
-                            @Override
-                            public ComponentContainer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                                String clazz = json.getAsJsonObject().get("clazz").getAsString();
-
-                                try {
-                                    Class c = Class.forName(clazz);
-                                    return new ComponentContainer((Component) context.deserialize(json.getAsJsonObject().get("value"), c));
-                                } catch (ClassNotFoundException e) {
-                                    e.printStackTrace();
-                                }
-                                return null;
-
-                            }
-                        }).create();
-
-                SavedGame sg = gson.fromJson(json, SavedGame.class);
-
-                entityEngine.removeAllEntities();
-                for (EntityContainer ec : sg.entitiesContainers) {
-                    Class c = Class.forName(ec.clazz);
-                    //System.out.println("Adding entity: "+c.getName());
-                    Entity e = (Entity) c.newInstance();
-                    for (ComponentContainer component : ec.components) {
-                        e.add(component.value);
-                     //   System.out.println("Adding Component: "+component.value.getClass().getName());
-                    }
-                    entityEngine.addEntity(e);
-                }
-                System.out.println(sg.toString());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            startThread();
-        }
+        gameSaver.loadFromJson(json);
     }
 }
