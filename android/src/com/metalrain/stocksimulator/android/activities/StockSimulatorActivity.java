@@ -17,6 +17,7 @@ import com.metalrain.stocksimulator.android.adapters.MarketItemsListAdapter;
 import com.metalrain.stocksimulator.android.views.MarketItemView;
 import com.metalrain.stocksimulator.android.views.OrderView;
 import com.metalrain.stocksimulator.android.views.PlayerView;
+import com.metalrain.stocksimulator.android.views.RandomEventView;
 import com.metalrain.stocksimulator.state.entities.MarketItemEntity;
 import com.metalrain.stocksimulator.state.systems.MarketUpdatedMessage;
 
@@ -40,6 +41,11 @@ public class StockSimulatorActivity extends Activity {
     PlayerView playerView;
     @InjectView(R.id.order_view)
     OrderView orderView;
+    @InjectView(R.id.random_event_view)
+    RandomEventView randomEventView;
+
+
+
 
     private volatile boolean updateUI = true;
     private Subscription subscription;
@@ -63,12 +69,23 @@ public class StockSimulatorActivity extends Activity {
         subscription = StockSimulator.getGameState().bus.toObserverable().subscribe(new Action1<Object>() {
             @Override
             public void call(final Object o) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (updateUI)
+                            ((BaseAdapter) marketListView.getAdapter()).notifyDataSetChanged();
+                        //invalidate=re-draw
+                        playerView.invalidate();
+                        orderView.invalidate();
+                    }
+                });
                 if (o instanceof MarketUpdatedMessage) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             if (updateUI)
                                 ((BaseAdapter) marketListView.getAdapter()).notifyDataSetChanged();
+                            //invalidate=re-draw
                             playerView.invalidate();
                             orderView.invalidate();
                         }

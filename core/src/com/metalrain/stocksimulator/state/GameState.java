@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.Random;
 
 /**
  * Created by Adam Hammer on 6/22/2015.
@@ -44,33 +45,40 @@ public class GameState {
     Executor executorService = Executors.newSingleThreadExecutor();
     private volatile boolean running = false;
     private int gameSpeed = 1;
+    private String[] letters=new String[]{"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+    Random random;
+
+
+
+
 
     public GameState(int seed, int max_iterations) {
+        random=new Random(seed);
         entityEngine.addEntity(new PlayerEntity("Player", "adamhammer2@gmail.com", "test"));
-        entityEngine.addEntity(new MarketItemEntity("a",
+        entityEngine.addEntity(new MarketItemEntity(getRandomStockName(),
                 500,
                 100,
                 1));
-        entityEngine.addEntity(new MarketItemEntity("b",
+        entityEngine.addEntity(new MarketItemEntity(getRandomStockName(),
                 500,
                 100,
                 2));
-        entityEngine.addEntity(new MarketItemEntity("c",
+        entityEngine.addEntity(new MarketItemEntity(getRandomStockName(),
                 500,
                 100,
                 3));
 
-        entityEngine.addEntity(new MarketItemEntity("d",
+        entityEngine.addEntity(new MarketItemEntity(getRandomStockName(),
                 500,
                 100,
                 4));
 
-        entityEngine.addEntity(new MarketItemEntity("e",
+        entityEngine.addEntity(new MarketItemEntity(getRandomStockName(),
                 500,
                 100,
                 5));
 
-        entityEngine.addEntity(new MarketItemEntity("f",
+        entityEngine.addEntity(new MarketItemEntity(getRandomStockName(),
                 500,
                 100,
                 6));
@@ -315,6 +323,14 @@ public class GameState {
         SerializedEntityList l = new SerializedEntityList();
         for (Entity e:entities) l.list.add(new SerializedEntity(e));
         return l;
+    }
+    private String getRandomStockName() {
+        if (random.nextBoolean()) {
+            return(letters[random.nextInt(26)] + letters[random.nextInt(26)] + letters[random.nextInt(26)]);
+        }
+        else{
+            return(letters[random.nextInt(26)] + letters[random.nextInt(26)] + letters[random.nextInt(26)]+ letters[random.nextInt(26)]);
+        }
     }
     /*----------------------------------*/
 }

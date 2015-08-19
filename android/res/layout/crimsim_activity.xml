@@ -16,4 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/market_list" />
+    <com.metalrain.stocksimulator.android.views.RandomEventView
+        android:id="@+id/random_event_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
