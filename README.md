@@ -12,7 +12,7 @@ Just make sure your phone is in developer mode and recognized by adb.
     
 
 
-Support the Developer via Google Play, official release ($5, or build it yourself for free)
+Support the Developer via Google Play, official release ($1, or build it yourself for free)
 
 - [Google Play](https://play.google.com/store/apps/details?id=com.metalrain.stocksimulator.android)
 
