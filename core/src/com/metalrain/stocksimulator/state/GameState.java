@@ -45,7 +45,6 @@ public class GameState {
     Executor executorService = Executors.newSingleThreadExecutor();
     private volatile boolean running = false;
     private int gameSpeed = 1;
-    private String[] letters=new String[]{"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
     Random random;
 
 
@@ -325,12 +324,15 @@ public class GameState {
         return l;
     }
     private String getRandomStockName() {
+        int length=random.nextInt(2)+2;
         if (random.nextBoolean()) {
-            return(letters[random.nextInt(26)] + letters[random.nextInt(26)] + letters[random.nextInt(26)]);
+            return(""+randomLetter() + randomLetter()+randomLetter());
+        } else{
+            return(""+randomLetter() + randomLetter()+randomLetter()+randomLetter());
         }
-        else{
-            return(letters[random.nextInt(26)] + letters[random.nextInt(26)] + letters[random.nextInt(26)]+ letters[random.nextInt(26)]);
-        }
+    }
+    private char randomLetter(){
+        return (char)(random.nextInt(26)+'a');
     }
     /*----------------------------------*/
 }

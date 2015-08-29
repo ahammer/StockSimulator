@@ -30,7 +30,6 @@ Context context;
     @Override
     public void onAttachedToWindow(){
         super.onAttachedToWindow();
-        StockSimulator.getGameState().startThread();
 
         subscription=StockSimulator.getGameState().bus.toObserverable().subscribe(new Action1<Object>(){
 
@@ -47,6 +46,12 @@ Context context;
             }
         });
 
+    }
+
+    @Override
+    public void onDetachedFromWindow(){
+        super.onDetachedFromWindow();
+        subscription.unsubscribe();
     }
 
 

@@ -1,26 +1,34 @@
 package com.metalrain.stocksimulator.state.components;
 
 import com.badlogic.ashley.core.Component;
-
 import java.util.Random;
 
 import javax.swing.text.html.parser.Entity;
+
+import sun.rmi.runtime.Log;
+
 
 /**
  * Created by Adam Hammer on 15-06-25.
  */
 public class StockImpactEventComponent extends Component{
+
     public final String message;
     public final int iteration;
     private final int[] demand_impact;
     private final String[] market_names;
     private final int[] supply_impact;
     ///new vars
-    private String toString;
+
     String demandViewData="\nDemand:   ";
     String supplyViewData="Supply:   ";
+    String toString="nope";
+    private static int integer=1;
+    private static String displayData="";
+
 
     public StockImpactEventComponent(String message, int iteration, String[] market_names, int[] supply_impact, int[] demand_impact) {
+        System.out.println("hell qworld");
         this.message = message;
         this.iteration = iteration;
         this.market_names = market_names;
@@ -33,6 +41,7 @@ public class StockImpactEventComponent extends Component{
 
 
     public boolean appliesTo(String name) {
+
         for (String market_name:market_names) {
             if (market_name.equalsIgnoreCase(name))
                 return true;
@@ -44,6 +53,8 @@ public class StockImpactEventComponent extends Component{
         int index = 0;
         String supplyHolder="";
         String demandHolder="";
+        integer++;
+
 
         for (String market_name:market_names) {
             if (market_name.equalsIgnoreCase(nc.name)) {
@@ -52,18 +63,24 @@ public class StockImpactEventComponent extends Component{
                 demandHolder=(" "+market_name+":"+String.valueOf(demand_impact[index]));
                 demandViewData+=demandHolder;
                 supplyHolder=(" "+market_name+":"+String.valueOf(supply_impact[index]));
-                supplyViewData+=demandHolder;
+                supplyViewData+=supplyHolder;
+
+
+
 
             }
             index++;
 
         }
-        toString=supplyViewData+demandViewData;
+
+        displayData=supplyViewData+demandViewData;
+        integer++;
 
     }
     @Override
     public String toString(){
-        return toString;
+
+        return displayData;
     }
 
 
