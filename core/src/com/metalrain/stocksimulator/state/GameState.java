@@ -19,6 +19,7 @@ import com.metalrain.stocksimulator.state.components.MarketItemComponent;
 import com.metalrain.stocksimulator.state.components.NameComponent;
 import com.metalrain.stocksimulator.state.components.PriceComponent;
 import com.metalrain.stocksimulator.state.components.PriceHistoryComponent;
+import com.metalrain.stocksimulator.state.components.StockImpactEventComponent;
 import com.metalrain.stocksimulator.state.components.WalletComponent;
 import com.metalrain.stocksimulator.state.entities.GameStateEntity;
 import com.metalrain.stocksimulator.state.entities.MarketItemEntity;
@@ -47,37 +48,39 @@ public class GameState {
     private int gameSpeed = 1;
     Random random;
 
+    public static String[] names=new String[6];
+
 
 
 
 
     public GameState(int seed, int max_iterations) {
-        random=new Random(seed);
+        random = new Random(seed);
         entityEngine.addEntity(new PlayerEntity("Player", "adamhammer2@gmail.com", "test"));
-        entityEngine.addEntity(new MarketItemEntity(getRandomStockName(),
+        entityEngine.addEntity(new MarketItemEntity(names[0]=getRandomStockName(),
                 500,
                 100,
                 1));
-        entityEngine.addEntity(new MarketItemEntity(getRandomStockName(),
+        entityEngine.addEntity(new MarketItemEntity(names[1]=getRandomStockName(),
                 500,
                 100,
                 2));
-        entityEngine.addEntity(new MarketItemEntity(getRandomStockName(),
+        entityEngine.addEntity(new MarketItemEntity(names[2]=getRandomStockName(),
                 500,
                 100,
                 3));
 
-        entityEngine.addEntity(new MarketItemEntity(getRandomStockName(),
+        entityEngine.addEntity(new MarketItemEntity(names[3]=getRandomStockName(),
                 500,
                 100,
                 4));
 
-        entityEngine.addEntity(new MarketItemEntity(getRandomStockName(),
+        entityEngine.addEntity(new MarketItemEntity(names[4]=getRandomStockName(),
                 500,
                 100,
                 5));
 
-        entityEngine.addEntity(new MarketItemEntity(getRandomStockName(),
+        entityEngine.addEntity(new MarketItemEntity(names[5]=getRandomStockName(),
                 500,
                 100,
                 6));

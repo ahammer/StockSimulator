@@ -15,8 +15,10 @@ import rx.functions.Action1;
  * Created by octopoco on 7/26/2015.
  */
 public class RandomEventView extends TextView {
-Context context;
+    Context context;
+
     private Subscription subscription;
+
     public RandomEventView(Context context){
         super(context);
         this.context=context;
@@ -39,6 +41,7 @@ Context context;
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+
                             setText(o.toString());
                         }
                     });
@@ -53,6 +56,7 @@ Context context;
         super.onDetachedFromWindow();
         subscription.unsubscribe();
     }
+
 
 
 }

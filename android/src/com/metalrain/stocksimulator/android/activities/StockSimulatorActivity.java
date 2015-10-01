@@ -47,6 +47,7 @@ public class StockSimulatorActivity extends Activity {
 
 
 
+
     private volatile boolean updateUI = true;
     private Subscription subscription;
 
@@ -69,16 +70,7 @@ public class StockSimulatorActivity extends Activity {
         subscription = StockSimulator.getGameState().bus.toObserverable().subscribe(new Action1<Object>() {
             @Override
             public void call(final Object o) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (updateUI)
-                            ((BaseAdapter) marketListView.getAdapter()).notifyDataSetChanged();
-                        //invalidate=re-draw
-                        playerView.invalidate();
-                        orderView.invalidate();
-                    }
-                });
+
                 if (o instanceof MarketUpdatedMessage) {
                     runOnUiThread(new Runnable() {
                         @Override
