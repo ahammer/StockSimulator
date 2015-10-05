@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 
 import com.metalrain.stocksimulator.android.R;
+
 import com.metalrain.stocksimulator.android.StockSimulator;
 
 
