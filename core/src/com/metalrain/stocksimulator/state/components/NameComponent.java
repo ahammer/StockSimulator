@@ -6,7 +6,9 @@ import com.badlogic.ashley.core.Component;
  * Created by Adam Hammer on 6/22/2015.
  */
 public class NameComponent extends Component {
-    public final String name;
+    public String name;
+
+    public NameComponent() {}
 
     public NameComponent(String name) {
         this.name = name;

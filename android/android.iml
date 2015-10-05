@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":android" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="StockSimulator" external.system.module.version="1.0" type="JAVA_MODULE" version="4">
+
+<module external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="StockSimulator" external.system.module.version="1.0" type="JAVA_MODULE" version="4">
+
   <component name="FacetManager">
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
@@ -82,10 +84,17 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
+<<<<<<< HEAD
+=======
+      <excludeFolder url="file://$MODULE_DIR$/build/reports" />
+      <excludeFolder url="file://$MODULE_DIR$/build/test-results" />
+      <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
+>>>>>>> 222402ee9446d5229beef70d97cb445b99d8da19
     </content>
     <orderEntry type="jdk" jdkName="Android API 21 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />
+<<<<<<< HEAD
     <orderEntry type="library" exported="" name="butterknife-6.1.0" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.0.12" level="project" />
     <orderEntry type="library" exported="" name="gdx-1.5.3" level="project" />
@@ -94,6 +103,16 @@
     <orderEntry type="library" exported="" name="ashley-1.4.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.0.1" level="project" />
+=======
+    <orderEntry type="library" exported="" name="rxjava-1.0.12" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-22.0.0" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-22.0.0" level="project" />
+    <orderEntry type="library" exported="" name="gdx-1.5.3" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-22.0.0" level="project" />
+    <orderEntry type="library" exported="" name="ashley-1.4.0" level="project" />
+    <orderEntry type="library" exported="" name="butterknife-6.1.0" level="project" />
+    <orderEntry type="library" exported="" name="support-v13-22.0.0" level="project" />
+>>>>>>> 222402ee9446d5229beef70d97cb445b99d8da19
     <orderEntry type="module" module-name="core" exported="" />
   </component>
 </module>

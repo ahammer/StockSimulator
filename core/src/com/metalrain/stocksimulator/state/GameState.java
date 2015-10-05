@@ -24,6 +24,7 @@ import com.metalrain.stocksimulator.state.components.WalletComponent;
 import com.metalrain.stocksimulator.state.entities.GameStateEntity;
 import com.metalrain.stocksimulator.state.entities.MarketItemEntity;
 import com.metalrain.stocksimulator.state.entities.PlayerEntity;
+import com.metalrain.stocksimulator.state.game_saver.GameSaver;
 import com.metalrain.stocksimulator.state.systems.MarketSystem;
 
 import java.lang.reflect.Type;
@@ -39,8 +40,14 @@ import java.util.Random;
  */
 public class GameState {
     public final static int MARKET_WARMUP_ITERATIONS = 4000;
+    private final GameSaver gameSaver = new GameSaver(this);
     public RxBus bus = new RxBus();
     private final MarketSystem system;
+
+    public Engine getEntityEngine() {
+        return entityEngine;
+    }
+
     Engine entityEngine = new Engine();
     long last_time = System.currentTimeMillis();
     Executor executorService = Executors.newSingleThreadExecutor();
@@ -48,49 +55,45 @@ public class GameState {
     private int gameSpeed = 1;
     Random random;
 
-    public static String[] names=new String[6];
-
-
-
+    public static String[] names = new String[6];
 
 
     public GameState(int seed, int max_iterations) {
         random = new Random(seed);
         entityEngine.addEntity(new PlayerEntity("Player", "adamhammer2@gmail.com", "test"));
-        entityEngine.addEntity(new MarketItemEntity(names[0]=getRandomStockName(),
+        entityEngine.addEntity(new MarketItemEntity(names[0] = getRandomStockName(),
                 500,
                 100,
                 1));
-        entityEngine.addEntity(new MarketItemEntity(names[1]=getRandomStockName(),
+        entityEngine.addEntity(new MarketItemEntity(names[1] = getRandomStockName(),
                 500,
                 100,
                 2));
-        entityEngine.addEntity(new MarketItemEntity(names[2]=getRandomStockName(),
+        entityEngine.addEntity(new MarketItemEntity(names[2] = getRandomStockName(),
                 500,
                 100,
                 3));
 
-        entityEngine.addEntity(new MarketItemEntity(names[3]=getRandomStockName(),
+        entityEngine.addEntity(new MarketItemEntity(names[3] = getRandomStockName(),
                 500,
                 100,
                 4));
 
-        entityEngine.addEntity(new MarketItemEntity(names[4]=getRandomStockName(),
+        entityEngine.addEntity(new MarketItemEntity(names[4] = getRandomStockName(),
                 500,
                 100,
                 5));
 
-        entityEngine.addEntity(new MarketItemEntity(names[5]=getRandomStockName(),
+        entityEngine.addEntity(new MarketItemEntity(names[5] = getRandomStockName(),
                 500,
                 100,
                 6));
 
 
         entityEngine.addEntity(new GameStateEntity());
-        entityEngine.addSystem(system = new MarketSystem(bus, seed,max_iterations+MARKET_WARMUP_ITERATIONS));
+        entityEngine.addSystem(system = new MarketSystem(bus, seed, max_iterations + MARKET_WARMUP_ITERATIONS));
         entityEngine.update(MARKET_WARMUP_ITERATIONS);
     }
-
 
 
     private void iterate() {
@@ -98,7 +101,7 @@ public class GameState {
         long delta_time = current_time - last_time;
         last_time = current_time;
         delta_time *= gameSpeed;
-        entityEngine.update(delta_time/1000f);
+        entityEngine.update(delta_time / 1000f);
 
     }
 
@@ -106,10 +109,10 @@ public class GameState {
         Family market = Family.all(MarketItemComponent.class, PriceComponent.class, NameComponent.class).get();
         ImmutableArray<Entity> entities = entityEngine.getEntitiesFor(market);
         System.out.println("Current Prices: ");
-        for (Entity e:entities) {
+        for (Entity e : entities) {
             PriceComponent p = e.getComponent(PriceComponent.class);
             NameComponent n = e.getComponent(NameComponent.class);
-            System.out.println("Name: "+n.name + " Price: "+p.price);
+            System.out.println("Name: " + n.name + " Price: " + p.price);
         }
     }
 
@@ -136,16 +139,16 @@ public class GameState {
         ImmutableArray<Entity> marketItemEntities = entityEngine.getEntitiesFor(market);
 
         Family players = Family.all(WalletComponent.class, NameComponent.class, InventoryComponent.class).get();
-        for (Entity player:entityEngine.getEntitiesFor(players)) {
+        for (Entity player : entityEngine.getEntitiesFor(players)) {
             NameComponent nc = player.getComponent(NameComponent.class);
             WalletComponent wc = player.getComponent(WalletComponent.class);
             InventoryComponent ic = player.getComponent(InventoryComponent.class);
-            System.out.println("Name: "+nc.name);
+            System.out.println("Name: " + nc.name);
             ic.printInventory(marketItemEntities);
             long value = ic.getInventoryValue(marketItemEntities);
-            System.out.println("Inventory Value: $"+value);
-            System.out.println(" Wallet Balance: $"+wc.balance);
-            System.out.println("    Total Value: $"+(value+wc.balance));
+            System.out.println("Inventory Value: $" + value);
+            System.out.println(" Wallet Balance: $" + wc.balance);
+            System.out.println("    Total Value: $" + (value + wc.balance));
         }
     }
 
@@ -154,7 +157,7 @@ public class GameState {
         ImmutableArray<Entity> entities = entityEngine.getEntitiesFor(market);
 
         System.out.println("Current Prices: ");
-        for (Entity e:entities) {
+        for (Entity e : entities) {
             PriceComponent p = e.getComponent(PriceComponent.class);
             NameComponent n = e.getComponent(NameComponent.class);
             PriceHistoryComponent history = e.getComponent(PriceHistoryComponent.class);
@@ -183,7 +186,7 @@ public class GameState {
 
     public MarketItemEntity getMarketItemByName(String item) {
         Family marketItems = Family.all(MarketItemComponent.class, NameComponent.class).get();
-        for (Entity e:entityEngine.getEntitiesFor(marketItems)) {
+        for (Entity e : entityEngine.getEntitiesFor(marketItems)) {
             if (e.getComponent(NameComponent.class).name.equalsIgnoreCase(item)) {
                 return (MarketItemEntity) e;
             }
@@ -196,8 +199,8 @@ public class GameState {
 
         ArrayList marketItems = new ArrayList<MarketItemEntity>();
         Family marketItemFamily = Family.all(MarketItemComponent.class).get();
-        for (Entity e:entityEngine.getEntitiesFor(marketItemFamily)) {
-            if (e instanceof  MarketItemEntity) marketItems.add(e);
+        for (Entity e : entityEngine.getEntitiesFor(marketItemFamily)) {
+            if (e instanceof MarketItemEntity) marketItems.add(e);
         }
         return marketItems;
 
@@ -216,7 +219,7 @@ public class GameState {
 
 
     public int getIteration() {
-            return system.getInterval();
+        return system.getInterval();
     }
 
     public long getInventoryCount(MarketItemEntity item) {
@@ -242,100 +245,27 @@ public class GameState {
     }
 
 
-    /* ------------------- All for serialization */
-    static class SerializedEntity {
-        public SerializedEntity(Entity e) {
-            for (Component c:e.getComponents()) {
-                components.add(c);
-            }
-        }
-        List<Component> components = new ArrayList<>();
-
-        @Override
-        public String toString() {
-            String s = "";
-            for (Component c:components) {
-                s+=c.getClass() + " "+c.toString()+"\n";
-
-            }
-            return "SerializedEntity{" +
-                    "components=" + s +
-                    '}';
-        }
-
-        public Entity toEntity() {
-            Entity e = new Entity();
-            for (Component c:components)e.add(c);
-            return e;
-        }
+    public String saveToJson() {
+        return gameSaver.saveToJson();
     }
 
-    public class SerializedEntityList {
-        List<SerializedEntity> list = new ArrayList<>();
-    }
-    public class SerializedEntitySerializer implements JsonSerializer<Component> {
-        public JsonElement serialize(Component component, Type typeOfSrc, JsonSerializationContext context) {
-            JsonObject jo = new JsonObject();
-            jo.addProperty("className", component.getClass().getName());
-            jo.add("component", context.serialize(component));
-            return jo;
-        }
-    }
-
-    public class SerializedEntityDeserializer implements JsonDeserializer<Component> {
-        @Override
-        public Component deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            try {
-                String className = json.getAsJsonObject().get("className").getAsString();
-                return (Component)new Gson().fromJson(json.getAsJsonObject().get("component"), Class.forName(className));
-            } catch (Exception e) {
-                throw new RuntimeException("Can't Deserialize");
-            }
-        }
-    }
-    Gson gson = new GsonBuilder()
-            .registerTypeAdapter(Component.class, new SerializedEntitySerializer())
-            .registerTypeAdapter(Component.class, new SerializedEntityDeserializer())
-            .create();
-    public String serialize() {
-        return gson.toJson(toSerializedEntityArray(entityEngine.getEntities()));
+    public void loadFromJson(String json) {
+        gameSaver.loadFromJson(json);
     }
 
 
-    public void deserialize(String json) {
-        boolean restart = false;
-        if (running) {
-            stopThread();
-            restart = true;
-        }
-
-        entityEngine.removeAllEntities();
-        SerializedEntityList output = gson.fromJson(json, SerializedEntityList.class);
-
-        for (SerializedEntity e:output.list) {
-          entityEngine.addEntity(e.toEntity());
-            System.out.println(e.toString());
-        }
-
-        if (restart) startThread();
-
-    }
-
-    private SerializedEntityList toSerializedEntityArray(ImmutableArray<Entity> entities) {
-        SerializedEntityList l = new SerializedEntityList();
-        for (Entity e:entities) l.list.add(new SerializedEntity(e));
-        return l;
-    }
     private String getRandomStockName() {
-        int length=random.nextInt(2)+2;
+        int length = random.nextInt(2) + 2;
         if (random.nextBoolean()) {
-            return(""+randomLetter() + randomLetter()+randomLetter());
-        } else{
-            return(""+randomLetter() + randomLetter()+randomLetter()+randomLetter());
+            return ("" + randomLetter() + randomLetter() + randomLetter());
+        } else {
+            return ("" + randomLetter() + randomLetter() + randomLetter() + randomLetter());
         }
     }
-    private char randomLetter(){
-        return (char)(random.nextInt(26)+'a');
+
+    private char randomLetter() {
+        return (char) (random.nextInt(26) + 'a');
     }
-    /*----------------------------------*/
+
+
 }

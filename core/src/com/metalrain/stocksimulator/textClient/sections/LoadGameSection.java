@@ -8,25 +8,29 @@ import java.util.Scanner;
 /**
  * Created by Adam Hammer on 6/22/2015.
  */
-public class SerializeSection implements ITextClientSection {
+public class LoadGameSection implements ITextClientSection {
     private final TextClient client;
 
-    public SerializeSection(TextClient textClient) {
+    public LoadGameSection(TextClient textClient) {
         this.client = textClient;
     }
 
     @Override
     public String getName() {
-        return "Serialize";
+        return "Load";
     }
 
     @Override
     public String getDescription() {
-        return "Serialize the state";
+        return "Load the state";
     }
 
     @Override
     public void invoke(String command, Scanner scanner) {
-        System.out.println(client.getState().serialize());
+        if (client.savedGameJson != null) {
+            client.getState().loadFromJson(client.savedGameJson);
+        } else {
+            System.out.println("Game save not available");
+        }
     }
 }

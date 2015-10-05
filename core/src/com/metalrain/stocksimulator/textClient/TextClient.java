@@ -2,13 +2,13 @@ package com.metalrain.stocksimulator.textClient;
 
 import com.metalrain.stocksimulator.state.GameState;
 import com.metalrain.stocksimulator.textClient.sections.HelpSection;
+import com.metalrain.stocksimulator.textClient.sections.LoadGameSection;
 import com.metalrain.stocksimulator.textClient.sections.MakePurchaseSection;
 import com.metalrain.stocksimulator.textClient.sections.MakeSaleSection;
 import com.metalrain.stocksimulator.textClient.sections.MarketHistorySection;
 import com.metalrain.stocksimulator.textClient.sections.PlayerSection;
-import com.metalrain.stocksimulator.textClient.sections.SerializeSection;
+import com.metalrain.stocksimulator.textClient.sections.SerializeGameSection;
 import com.metalrain.stocksimulator.textClient.sections.ShowMarketSection;
-import com.metalrain.stocksimulator.textClient.sections.TestDeserializeSection;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +21,7 @@ import java.util.Scanner;
 public class TextClient {
 
     private final GameState state;
+    public String savedGameJson;
 
     private final List<ITextClientSection> sectionList = Arrays.asList(
             new HelpSection(this),
@@ -29,12 +30,10 @@ public class TextClient {
             new PlayerSection(this),
             new MakePurchaseSection(this),
             new MakeSaleSection(this),
-            new SerializeSection(this),
-    new TestDeserializeSection(this)
-
-
-
+            new SerializeGameSection(this),
+            new LoadGameSection(this)
     );
+
     public TextClient(GameState state) {
         this.state = state;
 
