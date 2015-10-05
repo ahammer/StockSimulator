@@ -149,20 +149,18 @@ public class MarketSystem extends IntervalSystem {
                             (random.nextBoolean()?1:-1)*random.nextInt(200),
                             (random.nextBoolean()?1:-1)*random.nextInt(200)}
             );
-        } else {
+        } else
             return new StockImpactEventComponent("Supply Changed", interval, new String[]{GameState.names[0], GameState.names[1], GameState.names[2], GameState.names[3], GameState.names[4], GameState.names[5]},
                     new int[]{
-                            (random.nextBoolean()?1:-1)*random.nextInt(200),
-                            (random.nextBoolean()?1:-1)*random.nextInt(200),
-                            (random.nextBoolean()?1:-1)*random.nextInt(200),
-                            (random.nextBoolean()?1:-1)*random.nextInt(200),
-                            (random.nextBoolean()?1:-1)*random.nextInt(200),
-                            (random.nextBoolean()?1:-1)*random.nextInt(200),
-                            (random.nextBoolean()?1:-1)*random.nextInt(200)},
+                            (random.nextBoolean() ? 1 : -1) * random.nextInt(200),
+                            (random.nextBoolean() ? 1 : -1) * random.nextInt(200),
+                            (random.nextBoolean() ? 1 : -1) * random.nextInt(200),
+                            (random.nextBoolean() ? 1 : -1) * random.nextInt(200),
+                            (random.nextBoolean() ? 1 : -1) * random.nextInt(200),
+                            (random.nextBoolean() ? 1 : -1) * random.nextInt(200),
+                            (random.nextBoolean() ? 1 : -1) * random.nextInt(200)},
                     new int[]{0, 0, 0, 0, 0, 0, 0}
             );
-
-        }
     }
 
 
