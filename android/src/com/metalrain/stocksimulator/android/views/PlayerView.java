@@ -13,6 +13,11 @@ import com.metalrain.stocksimulator.state.GameState;
 import com.metalrain.stocksimulator.state.components.WalletComponent;
 import com.metalrain.stocksimulator.state.entities.PlayerEntity;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -28,14 +33,19 @@ public class PlayerView extends FrameLayout {
     EntityRendererView playerGraph;
     @InjectView(R.id.cash)
     TextView cash;
+    BufferedReader reader;
+    PrintWriter writer;
+    Socket sock;
 
     public PlayerView(Context context) {
         super(context);
+
         inflate();
     }
 
     public PlayerView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
         inflate();
     }
 
@@ -85,4 +95,5 @@ public class PlayerView extends FrameLayout {
         }
 
     }
+
 }
